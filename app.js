@@ -8,12 +8,21 @@ function showGifs(res) {
 
 async function getGiffy() {
 
-  let search = $("inputText").val();
-  let response = await axios.post("api.giphy.com/v1/gifs/search", { search });
+  let $search = $("inputText").val();
+  console.log($search);
+  let response = await axios.get("api.giphy.com/v1/randomid", {params: {$search}});
+  console.log(response);
 }
 
-function search(evt) {
-  $("#search").on("click", getGiffy);
-  event.preventDefault(evt);
+function search(event) {
+  // $("#search").on("click", getGiffy(event){
+  //   event.preventDefault();
+  // });
+
+  $("#search").click(function(event){
+    event.preventDefault();
+    getGiffy();
+  });
 }
 search();
+
