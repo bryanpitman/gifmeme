@@ -1,44 +1,46 @@
 "use strict";
 console.log("Let's get this party started!");
 
-
-function showGifs(res) {
-  $("div").html(res);
+/**input is a response from the API and appends the img url to the div */
+function showGifs(link) {
+  let url = link.data.data[0].images.original.url;
+  $("div").append(`<img src = "${url}">`);
 }
 
 /**
  * Get the input text and in response, send get request to API giphy, returns giphy obj
  * setting url to link in giphy obj
- * append img to div
+
  */
 async function getGiffy() {
-
   let search = $("#inputText").val();
   console.log(search);
   let key = "KvIxjZLWisiNgR92hpRiYpVTyZStjjKq";
-  let response = await axios.get("http://api.giphy.com/v1/gifs/search", {params: {q:search, api_key:key}});
-  let url = response.data.data[0].images.original.url;
+  let response = await axios.get("http://api.giphy.com/v1/gifs/search", { params: { q: search, api_key: key } });
+  showGifs(response);
 
-  $("div").append(`<img src = "${url}">`);
 
-  //$(<img></img>)
-
-  //console.log(response);
 }
 
+//removes all images when the remove button is clicked
+let $remove = $("#remove");
+$remove.on("click", function () {
+  $("img").remove();
+  console.log("deleted images");
+});
+
 /**
- * when submit button clicked, run getGiffy()
+ * when submit button clicked, run the function getGiffy()
  *
  */
 function search(event) {
-  // $("#search").on("click", getGiffy(event){
-  //   event.preventDefault();
-  // });
 
-  $("#search").click(function(event){
+  $("#search").click(function (event) {
     event.preventDefault();
     getGiffy();
   });
 }
+
+
 search();
 
