@@ -10,7 +10,9 @@ async function getGiffy() {
 
   let $search = $("inputText").val();
   console.log($search);
-  let response = await axios.get("api.giphy.com/v1/randomid", {params: {$search}});
+  let key = "KvIxjZLWisiNgR92hpRiYpVTyZStjjKq";
+  let response = await axios.get("http://api.giphy.com/v1/gifs/search", {params: {q:$search, api_key:key}});
+  // console.log(response.data.data[0].url);
   console.log(response);
 }
 
